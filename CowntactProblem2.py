@@ -12,7 +12,7 @@ class CowFarm:
         i = 0
         while i < len(self.cowList):
             if self.cowList[i] == 1:
-                if i = 0 or i = len(self.cowList):
+                if i == 0 or i == len(self.cowList) - 1:
                     edge = True
                 temp+=1
             elif temp == 0:
