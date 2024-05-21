@@ -7,6 +7,7 @@ class CowFarm:
     
     def findSmallestLine(self):
         first = True
+        edge = False
         temp = 0
         i = 0
         while i < len(self.cowListcowList):
