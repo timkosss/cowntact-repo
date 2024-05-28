@@ -11,25 +11,35 @@ class CowFarm:
         temp = 0
         i = 0
         while i < len(self.cowList):
-            if self.cowList[i] == 1:
-                if i == 0 or i == len(self.cowList) - 1:
-                    edge = True
-                temp+=1
-            elif temp == 0:
-                pass
+            if self.cowList[i] == 0:
+                if temp != 0:
+                    if first:
+                        if edge:
+                          smallest = self.maxDays(temp, True)
+                        else:
+                            smallest = self.maxDays(temp, False)
+                    else:
+                        if self.maxDays(temp, False) < smallest:
+                            smallest = self.maxDays(temp, False)
+                    temp = 0
+            elif i == len(self.cowList) - 1 and self.cowList[i] == 1:
+                temp += 1
+                if first:
+                    smallest = self.maxDays(temp, True)
+                elif self.maxDays(temp, True) < smallest:
+                    smallest = self.maxDays(temp, True)
             else:
-                if edge:
-                    temp = (temp * 2) - 1
-                    edge = False
-                if first or temp < smallest:
-                    smallest = temp
-                    first = False
-                temp = 0
+                temp += 1
             i += 1
-        return smallest
+        if 'smallest' in locals():
+            return smallest
+        return 0
     
-    def maxDays(self):
-        return int(self.findSmallestLine() / 2)
+    def maxDays(self, num, edge):
+        if edge:
+            return num - 1
+        else:
+            return int((num - 1) / 2)
     
     def numOrigin(self, numCows, numDays):
         magicNum = (numDays * 2) + 1
@@ -37,22 +47,26 @@ class CowFarm:
     
     def findTheInfected(self):
         total = 0
-        tempCluster = 0
-        days = self.maxDays()
-        for i in self.cowList:
-            if i == 1:
-                tempCluster += 1
-            elif tempCluster == 0:
-                pass
+        temp = 0
+        days = self.findSmallestLine()
+        i = 0
+        while i < len(self.cowList):
+            if self.cowList[i] == 0:
+                total += self.numOrigin(temp, days)
+                temp = 0
+            elif i == len(self.cowList) - 1 and self.cowList[i] == 1:
+                temp += 1
+                total += self.numOrigin(temp, days)
             else:
-                total += self.numOrigin(tempCluster, days)
-                tempCluster = 0
+                temp += 1
+            i +=1
         return total
 
         
 
 
 
-cowNum = "11111"
+cowNum = "1111110111"
 cowLine = CowFarm(cowNum)
+print(cowLine.findSmallestLine())
 print(cowLine.findTheInfected())
