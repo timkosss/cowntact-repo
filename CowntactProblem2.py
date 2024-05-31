@@ -66,7 +66,6 @@ class CowFarm:
 
 
 
-cowNum = "1111110111"
+cowNum = "1110111110"
 cowLine = CowFarm(cowNum)
-print(cowLine.findSmallestLine())
 print(cowLine.findTheInfected())
